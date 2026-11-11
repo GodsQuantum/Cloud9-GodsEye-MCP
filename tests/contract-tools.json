@@ -1,0 +1,73 @@
+{
+  "aircraft_near": {
+    "properties": {
+      "latitude": {
+        "title": "Latitude",
+        "type": "number"
+      },
+      "limit": {
+        "default": 40,
+        "title": "Limit",
+        "type": "integer"
+      },
+      "longitude": {
+        "title": "Longitude",
+        "type": "number"
+      },
+      "radius_deg": {
+        "default": 3,
+        "title": "Radius Deg",
+        "type": "number"
+      }
+    },
+    "required": [
+      "latitude",
+      "longitude"
+    ],
+    "type": "object"
+  },
+  "regional_brief": {
+    "properties": {
+      "article_limit": {
+        "default": 8,
+        "title": "Article Limit",
+        "type": "integer"
+      },
+      "latitude": {
+        "title": "Latitude",
+        "type": "number"
+      },
+      "longitude": {
+        "title": "Longitude",
+        "type": "number"
+      }
+    },
+    "required": [
+      "latitude",
+      "longitude"
+    ],
+    "type": "object"
+  },
+  "source_status": {
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "weather_effects": {
+    "properties": {
+      "latitude": {
+        "title": "Latitude",
+        "type": "number"
+      },
+      "longitude": {
+        "title": "Longitude",
+        "type": "number"
+      }
+    },
+    "required": [
+      "latitude",
+      "longitude"
+    ],
+    "type": "object"
+  }
+}
