@@ -5,7 +5,7 @@ from urllib.parse import urlsplit
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         path=urlsplit(self.path).path
-        if path=='/api/opensky':
+        if path=='/api/flights':
             data={'time':123,'states':[['abc123','FIXTURE','Testland',None,None,2.3,48.8,5000,False,145,90]]}
         elif path=='/api/regional-brief':
             data={'status':'fixture','articles':[{'title':'Synthetic test'}]}

@@ -68,7 +68,12 @@ def aircraft_near(latitude:float, longitude:float, radius_deg:float=3.0, limit:i
     if not (-90<=latitude<=90 and -180<=longitude<=180):
         return {"error":"invalid coordinates"}
     radius=max(0.25,min(float(radius_deg),15.0)); limit=max(1,min(int(limit),100))
-    d=_get("/api/opensky",{"lat":latitude,"lon":longitude})
+    # Gods Eye View v0.3+ renamed the official OpenSky HTTP proxy to
+    # /api/flights; retain compatibility with prior releases without
+    # rewriting or replacing the upstream application.
+    d=_get("/api/flights",{"lat":latitude,"lon":longitude})
+    if isinstance(d,dict) and d.get("http_status")==404:
+        d=_get("/api/opensky",{"lat":latitude,"lon":longitude})
     states=(d or {}).get("states") if isinstance(d,dict) else None
     if not isinstance(states,list): return {"status":"unavailable","detail":d}
     out=[]
@@ -100,6 +105,10 @@ def source_status()->dict:
         ("ais","/api/ais-live?maxRows=1"),
     ]:
         d=_get(path)
+        if name=="setup" and isinstance(d,dict) and d.get("http_status")==403:
+            # Upstream protects provider settings from non-loopback clients.
+            # Preserve this security gate; restricted does not mean down.
+            d={"status":"restricted","reason":"provider_settings_local_only"}
         if name=="setup" and isinstance(d,dict):
             # Keep only key-presence booleans/status; never return values.
             safe={}
